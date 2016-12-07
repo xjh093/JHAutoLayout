@@ -82,7 +82,7 @@ w(110)/10，就是：view.frame.size.width / 10 <br>
 ####2.5 value1_value2
 表示：value2/value1 <br>
 value1是int类型，1，2，3，4...... <br>
-value2是prefix(value1) <br>
+value2是prefix(value) <br>
 比如：<br>
 2_w(110)+10，就是：view.frame.size.width/2 + 10 <br>
 2_w(110)-10，就是：view.frame.size.width/2 - 10 <br>
