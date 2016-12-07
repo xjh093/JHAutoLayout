@@ -71,8 +71,8 @@ maxx(110) 表示取父类view中tag值为100的view的x+width值，即maxx(100) 
 maxy(110) 表示取父类view中tag值为100的view的y+height值，即maxy(100) == CGRectGetMaxY(view.frame) <br>
 
 ####2.4 结合2.2与2.3
-把2.2中的 W+(-*/)value的W换成 prefix(value) <br>
-即成：prefix(value1)+(-*/)value2 <br>
+####把2.2中的 W+(-*/)value的W换成 prefix(value) <br>
+####即成：prefix(value1)+(-*/)value2 <br>
 比如： <br>
 w(110)+10，就是：view.frame.size.width + 10 <br>
 w(110)-10，就是：view.frame.size.width - 10 <br>
