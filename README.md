@@ -96,6 +96,8 @@ value2是prefix(value) <br>
 [self.view jhAutoLayout];
 ```
 
+![image](https://github.com/xjh093/JHAutoLayout/blob/master/1.gif)
+
 更新布局：
 ```objc
 -(void)viewDidAppear:(BOOL)animated  
@@ -111,4 +113,7 @@ value2是prefix(value) <br>
 比如：
 
 VC1竖屏旋转成横屏后进入VC2，VC2横屏旋转成竖屏后再返回，就需要更新。
+
+![image](https://github.com/xjh093/JHAutoLayout/blob/master/2.gif)
+
 
