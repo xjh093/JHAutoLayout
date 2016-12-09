@@ -46,6 +46,57 @@
 #define JH_align_h(jhclass)       - (jhclass *(^)(id))jh_align;
 #define JH_alpha_h(jhclass)       - (jhclass *(^)(id))jh_alpha;
 
+#define JH_LAZY_MutableArray(jhclass) \
+- (NSMutableArray *)jhclass{ \
+    if (!_##jhclass) { \
+        _##jhclass = @[].mutableCopy; \
+    } \
+    return _##jhclass; \
+}
+
+#define JH_LAZY_MutableDictionary(jhclass) \
+- (NSMutableDictionary *)jhclass{ \
+    if (!_##jhclass) { \
+        _##jhclass = @{}.mutableCopy; \
+    } \
+    return _##jhclass; \
+}
+
+#define JH_LAZY_WEAK_UI(UIclass,jhclass) \
+- (UIclass *)jhclass{ \
+    if (!_##jhclass) { \
+        UIclass *xView = [[UIclass alloc] init]; \
+        [self.view addSubview:xView]; \
+        _##jhclass = xView; \
+    } \
+    return _##jhclass; \
+}
+
+#define JH_LAZY_STRONG_UI(UIclass,jhclass) \
+- (UIclass *)jhclass{ \
+    if (!_##jhclass) { \
+        _##jhclass = [[UIclass alloc] init]; \
+    } \
+    return _##jhclass; \
+}
+
+#define JH_LAZY_WEAK_BUTTON(jhclass) \
+- (UIButton *)jhclass{ \
+    if (!_##jhclass) { \
+        UIButton *xButton = [UIButton buttonWithType:1]; \
+        [self.view addSubview:xButton]; \
+        _button = xButton; \
+    } \
+    return _button; \
+}
+
+#define JH_LAZY_STRONG_BUTTON(jhclass) \
+- (UIButton *)button{ \
+    if (!_button) { \
+        _button = [UIButton buttonWithType:1]; \
+    } \
+    return _button; \
+}
 
 //=============================================================================//
 //  UIView
