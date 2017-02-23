@@ -8,6 +8,7 @@
 
 #import "SecondViewController.h"
 #import "UIView+JHCategory.h"
+#import "ViewController.h"
 
 @interface SecondViewController ()
 @property (nonatomic, strong) NSTimer       *timer;
@@ -122,7 +123,6 @@
         UIColor *color = [UIColor orangeColor];
         color;
     })).jh_tag(@(104));
-    
     
 }
 
@@ -242,6 +242,11 @@
     .jh_font(@"14")
     .jh_tag(@(400));
 }
+
+//- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
+//{
+//    [self.navigationController pushViewController:[[ViewController alloc] init] animated:YES];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

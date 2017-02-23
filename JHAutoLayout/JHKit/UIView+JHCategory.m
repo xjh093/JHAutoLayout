@@ -313,7 +313,35 @@ JH_addToView_m(UIView)
 - (void)jhAutoLayout
 {
     //屏幕旋转通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jhAutoLayoutSubview) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(jhAutoLayoutSubview)
+                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
+                                               object:nil];
+    
+    //view frame 更改通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(jhViewFrameChanged)
+                                                 name:@"jhViewFrameChange"
+                                               object:nil];
+    
+}
+
+#pragma mark 当前window内view frame 有改动
+- (void)jhViewFrameChanged
+{
+    if (self.subviews.count > 0) { //有子view
+        for (UIView *view in self.subviews) {
+            JHLog(@"view tag:%@ - %p",@(view.tag),view);
+            NSString *frameString = objc_getAssociatedObject(view, "jhFrameString");
+            if (frameString.length > 0) {
+                CGRect frame = [view jhRectFromString:frameString];
+                if(!CGRectEqualToRect(CGRectZero, frame)) {
+                    view.frame = frame;
+                    [view jhViewFrameChanged];
+                }
+            }
+        }
+    }
 }
 
 #pragma mark 布局子view
@@ -321,12 +349,23 @@ JH_addToView_m(UIView)
 {
     //当前视图不在窗口
     if (!self.window) {
-        //NSLog(@"1");
+        JHLog(@"1");
+        
+        /**< 设置标志，view需要更新*/
+        NSString *jh_rotate = objc_getAssociatedObject(self, "jhScreenRotateFlag");
+        if ([jh_rotate isEqualToString:@"YES"]) {
+            objc_setAssociatedObject(self, "jhScreenRotateFlag", @"NO", OBJC_ASSOCIATION_COPY_NONATOMIC);
+            JHLog(@"flag:NO");
+        }else{
+            objc_setAssociatedObject(self, "jhScreenRotateFlag", @"YES", OBJC_ASSOCIATION_COPY_NONATOMIC);
+            JHLog(@"flag:YES");
+        }
+        
         return;
     }
     if (self.subviews.count > 0) { //有子view
         for (UIView *view in self.subviews) {
-            //NSLog(@"view tag:%@ - %p",@(view.tag),view);
+            JHLog(@"view tag:%@ - %p",@(view.tag),view);
             NSString *frameString = objc_getAssociatedObject(view, "jhFrameString");
             if (frameString.length > 0) {
                 CGRect frame = [view jhRectFromString:frameString];
@@ -342,9 +381,22 @@ JH_addToView_m(UIView)
 #pragma mark 更新布局
 - (void)jhUpdateLayout
 {
-    [UIView animateWithDuration:0.25 animations:^{
-        [self jhAutoLayoutSubview];
-    }];
+    /**< 控制器的view第一次加载的时候，就不用更新了*/
+    BOOL jh_first_flag = objc_getAssociatedObject(self, "jhFirstFlag");
+    if (!jh_first_flag) {
+        objc_setAssociatedObject(self, "jhFirstFlag", @(YES), OBJC_ASSOCIATION_ASSIGN);
+    }else{
+        
+        /**< 屏幕有旋转过，才进行更新*/
+        NSString *jh_rotate = objc_getAssociatedObject(self, "jhScreenRotateFlag");
+        if ([jh_rotate isEqualToString:@"YES"]) {
+            objc_setAssociatedObject(self, "jhScreenRotateFlag", @"NO", OBJC_ASSOCIATION_COPY_NONATOMIC);
+            [UIView animateWithDuration:0.25 animations:^{
+                [self jhAutoLayoutSubview];
+                JHLog(@"jhUpdateLayout");
+            }];
+        }
+    }
 }
 
 #pragma mark 通过字符串转成frame
@@ -367,7 +419,7 @@ JH_addToView_m(UIView)
             objc_setAssociatedObject(self, "jhFrameString", saveFrameStr, OBJC_ASSOCIATION_COPY_NONATOMIC);
             
             //发个通知，重新布局
-            [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"jhViewFrameChange" object:nil];
         }
         
         CGFloat X = [self jhFloatFromString:xFourElementArr[0]];
@@ -381,6 +433,7 @@ JH_addToView_m(UIView)
     return CGRectZero;
 }
 
+
 - (CGFloat)jhFloatFromString:(NSString *)string
 {
     if ([string hasPrefix:@"x:"] ||
@@ -390,7 +443,7 @@ JH_addToView_m(UIView)
     {
         NSString *subStr = [string substringFromIndex:2]; //eg. 2_x(100)+10 or x(100)+10 or x(100) or 10
         NSArray  *xArr = [subStr componentsSeparatedByString:@")"];
-        //NSLog(@"xArr:%@",xArr);//x(100) 会分割成 x(100 和 ""
+        JHLog(@"xArr:%@",xArr);//x(100) 会分割成 x(100 和 ""
         
         if (xArr.count == 1) // 10 针对常量的情况
         {
@@ -1232,7 +1285,7 @@ JH_addToView_m(UIScrollView)
     
     xAIView.frame = CGRectMake(0, 0, width, height);
     
-    //NSLog(@"frame:%@",NSStringFromCGRect(xAIView.frame));
+    JHLog(@"frame:%@",NSStringFromCGRect(xAIView.frame));
     //有显示信息
     if (text.length > 0)
     {

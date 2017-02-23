@@ -62,20 +62,22 @@
     return _##jhclass; \
 }
 
-#define JH_LAZY_WEAK_UI(UIclass,jhclass) \
+#define JH_LAZY_WEAK_UI(UIclass,jhclass,spview,jhdetail) \
 - (UIclass *)jhclass{ \
     if (!_##jhclass) { \
+        if (!spview) return nil; \
         UIclass *xView = [[UIclass alloc] init]; \
-        [self.view addSubview:xView]; \
+        xView = jhdetail; \
+        [spview addSubview:xView]; \
         _##jhclass = xView; \
     } \
     return _##jhclass; \
 }
 
-#define JH_LAZY_STRONG_UI(UIclass,jhclass) \
+#define JH_LAZY_STRONG_UI(UIclass,jhclass,jhdetail) \
 - (UIclass *)jhclass{ \
     if (!_##jhclass) { \
-        _##jhclass = [[UIclass alloc] init]; \
+        _##jhclass = jhdetail; \
     } \
     return _##jhclass; \
 }
