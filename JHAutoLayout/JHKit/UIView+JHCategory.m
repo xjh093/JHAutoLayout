@@ -326,6 +326,14 @@ JH_addToView_m(UIView)
     
 }
 
+//- (void)willMoveToSuperview:(UIView *)superView
+//{
+//    if (!superView) {
+//        //[[NSNotificationCenter defaultCenter] removeObserver:self];
+//        NSLog(@"%s:%@",__FUNCTION__,superView);
+//    }
+//}
+
 #pragma mark 当前window内view frame 有改动
 - (void)jhViewFrameChanged
 {
@@ -347,6 +355,10 @@ JH_addToView_m(UIView)
 #pragma mark 布局子view
 - (void)jhAutoLayoutSubview
 {
+    if (!self) {
+        return;
+    }
+    
     //当前视图不在窗口
     if (!self.window) {
         JHLog(@"1");
@@ -397,6 +409,17 @@ JH_addToView_m(UIView)
             }];
         }
     }
+}
+
+#pragma mark 结束布局
+- (void)jhEndLayout
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidChangeStatusBarOrientationNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"jhViewFrameChange"
+                                                  object:nil];
 }
 
 #pragma mark 通过字符串转成frame

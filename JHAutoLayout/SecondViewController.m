@@ -61,6 +61,7 @@
     [super viewWillDisappear:animated];
     [_timer invalidate];
     _timer = nil;
+    [self.view jhEndLayout];
 }
 
 - (void)jhSetupView1

@@ -136,6 +136,7 @@ JH_addToView_h(UIView)
 - (void)jhAddTapEvent; /**< 添加单击收回键盘事件*/
 - (void)jhAutoLayout; /**< 自动布局*/
 - (void)jhUpdateLayout; /**< 更新布局*/
+- (void)jhEndLayout; /**< 结束布局*/
 @end
 
 

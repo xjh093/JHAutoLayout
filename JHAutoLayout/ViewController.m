@@ -22,6 +22,7 @@ JH_STRONG_P(UILabel, detailLabel)
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    
     self.view.jh_bgColor(@"0xffffff");
     
     //自定义返回按钮
