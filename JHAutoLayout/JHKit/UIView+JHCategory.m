@@ -395,12 +395,15 @@ JH_addToView_m(UIView)
 {
     /**< 控制器的view第一次加载的时候，就不用更新了*/
     BOOL jh_first_flag = objc_getAssociatedObject(self, "jhFirstFlag");
-    if (!jh_first_flag) {
+    /**< 屏蔽是否有旋转过*/
+    NSString *jh_rotate = objc_getAssociatedObject(self, "jhScreenRotateFlag");
+    /**< 第一次加载，无旋转*/
+    if (!jh_first_flag && !jh_rotate) {
         objc_setAssociatedObject(self, "jhFirstFlag", @(YES), OBJC_ASSOCIATION_ASSIGN);
     }else{
         
         /**< 屏幕有旋转过，才进行更新*/
-        NSString *jh_rotate = objc_getAssociatedObject(self, "jhScreenRotateFlag");
+        //NSString *jh_rotate = objc_getAssociatedObject(self, "jhScreenRotateFlag");
         if ([jh_rotate isEqualToString:@"YES"]) {
             objc_setAssociatedObject(self, "jhScreenRotateFlag", @"NO", OBJC_ASSOCIATION_COPY_NONATOMIC);
             [UIView animateWithDuration:0.25 animations:^{

@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "UIView+JHCategory.h"
+#import "JHKit.h"
 #import "SecondViewController.h"
 
 @interface ViewController ()
@@ -22,6 +22,7 @@ JH_STRONG_P(UILabel, detailLabel)
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.view.jh_bgColor(@"0xffffff");
     
@@ -35,7 +36,7 @@ JH_STRONG_P(UILabel, detailLabel)
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 #endif
     
-    self.title = @"JHAutoLayout";
+    self.navigationItem.title = @"JHAutoLayout";
     
     //开启自动布局-Open AutoLayout
     [self.view jhAutoLayout];
@@ -67,7 +68,7 @@ JH_STRONG_P(UILabel, detailLabel)
 
 JH_LAZY_STRONG_UI(UILabel, detailLabel, ({
     UILabel
-    .jh_label()
+    .jhLabel()
     .jh_text(@"会有动画")
     .jh_color(@"0x000000")
     .jh_font(@(16))

@@ -7,7 +7,7 @@
 //
 
 #import "SecondViewController.h"
-#import "UIView+JHCategory.h"
+#import "JHKit.h"
 #import "ViewController.h"
 
 @interface SecondViewController ()

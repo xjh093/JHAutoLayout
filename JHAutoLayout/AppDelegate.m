@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "JHTabBarViewController.h"
+#import "JHNavigationController.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    JHTabBarViewController *tabVC = [[JHTabBarViewController alloc] init];
+    
+#if 0
+    ViewController *vc1 = [[ViewController alloc] init];
+    ViewController *vc2 = [[ViewController alloc] init];
+    
+    JHNavigationController *nav1 = [[JHNavigationController alloc] initWithRootViewController:vc1];
+    JHNavigationController *nav2 = [[JHNavigationController alloc] initWithRootViewController:vc2];
+    
+    tabVC.viewControllers = @[nav1,nav2];
+#endif
+    
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = tabVC;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
