@@ -15,6 +15,7 @@
 
 JH_new_m(UITextView)
 JH_tag_m(UITextView)
+JH_bind_m(UITextView)
 JH_text_m(UITextView)
 JH_font_m(UITextView)
 JH_align_m(UITextView)

@@ -21,6 +21,7 @@
 #import "UITextField+JHCategory.h"
 #import "UIScrollView+JHCategory.h"
 #import "UIActivityIndicatorView+JHCategory.h"
+#import "UIAlertController+JHCategory.h"
 
 #endif
 

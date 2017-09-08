@@ -15,6 +15,7 @@
 + (UITableView *)jhTableView:(NSString *)frameStr style:(NSInteger)style target:(id)target view:(UIView *)view addToView:(BOOL)flag; /**< style:plain-0,group-1.*/
 
 JH_tag_h(UITableView)
+JH_bind_h(UITableView)
 JH_frame_h(UITableView)
 JH_alpha_h(UITableView)
 JH_bgColor_h(UITableView)

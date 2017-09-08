@@ -227,4 +227,46 @@
     }
     return flag;
 }
+
++ (NSString *)jh_hideMiddleString:(NSString *)string{
+    if (string.length <= 2) {
+        return string;
+    }
+    
+    if (string.length == 3) {
+        return [string stringByReplacingCharactersInRange:NSMakeRange(1, 1) withString:@"*"];
+    }
+    
+    NSInteger mid = string.length/2;
+    
+    NSString *preString = [string substringToIndex:mid];
+    NSString *subString = [string substringFromIndex:mid];
+    //NSLog(@"preString1:%@",preString);
+    //NSLog(@"subString1:%@",subString);
+    
+    mid = preString.length/2;
+    NSRange range = [preString rangeOfString:[preString substringFromIndex:mid]];
+    preString = [preString stringByReplacingCharactersInRange:range withString:({
+        NSMutableString *mstr = @"".mutableCopy;
+        for (int i = 0; i < range.length; ++i) {
+            [mstr appendString:@"*"];
+        }
+        mstr;
+    })];
+    //NSLog(@"preString2:%@",preString);
+    
+    mid = subString.length/2;
+    range = [subString rangeOfString:[subString substringToIndex:mid]];
+    subString = [subString stringByReplacingCharactersInRange:range withString:({
+        NSMutableString *mstr = @"".mutableCopy;
+        for (int i = 0; i < range.length; ++i) {
+            [mstr appendString:@"*"];
+        }
+        mstr;
+    })];
+    //NSLog(@"subString2:%@",subString);
+    
+    return [NSString stringWithFormat:@"%@%@",preString,subString];
+}
+
 @end

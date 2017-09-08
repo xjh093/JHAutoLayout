@@ -53,7 +53,7 @@ JH_LAZY_STRONG_UI(UITextField, <#textField#>, ({
     .jh_lvMode(@(3))
     .jh_lfView(({
         UIView
-        .jh_view()
+        .jhView()
         .jh_frame(@"{{0,0},{5,5}}");
     }));
 }))

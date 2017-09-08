@@ -14,6 +14,7 @@
 
 JH_new_m(UIImageView)
 JH_tag_m(UIImageView)
+JH_bind_m(UIImageView)
 JH_frame_m(UIImageView)
 JH_alpha_m(UIImageView)
 JH_bgColor_m(UIImageView)

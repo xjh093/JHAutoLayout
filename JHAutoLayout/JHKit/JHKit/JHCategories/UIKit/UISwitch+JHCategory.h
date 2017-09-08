@@ -13,6 +13,7 @@
 
 JH_new_h(UISwitch)
 JH_tag_h(UISwitch)
+JH_bind_h(UISwitch)
 JH_frame_h(UISwitch)
 JH_alpha_h(UISwitch)
 JH_bgColor_h(UISwitch)

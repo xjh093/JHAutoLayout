@@ -14,6 +14,7 @@
 @implementation UIButton (JHCategory)
 
 JH_tag_m(UIButton)
+JH_bind_m(UIButton)
 JH_frame_m(UIButton)
 JH_alpha_m(UIButton)
 JH_bgColor_m(UIButton)

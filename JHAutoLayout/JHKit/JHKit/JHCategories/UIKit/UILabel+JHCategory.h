@@ -15,6 +15,7 @@
 
 JH_new_h(UILabel)
 JH_tag_h(UILabel)
+JH_bind_h(UILabel)
 JH_text_h(UILabel)
 JH_font_h(UILabel)
 JH_align_h(UILabel)
@@ -35,4 +36,5 @@ JH_addToView_h(UILabel)
 - (void)jhLabelFrame:(id)frame text:(NSString *)text color:(id)color font:(id)font align:(CGFloat)align;
 - (void)jhAddAttributeWithSubString:(NSString *)string value:(id)value; /**< 添加富文本属性*/
 - (void)jhAddAttributeWithSubString:(NSString *)string value:(id)value range:(NSRange)range; /**< 添加富文本属性*/
+- (void)jhAddLineSpace:(CGFloat)space; /**< 设置行间距*/
 @end

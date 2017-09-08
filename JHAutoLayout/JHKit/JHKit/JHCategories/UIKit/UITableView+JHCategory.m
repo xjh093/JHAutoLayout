@@ -30,6 +30,7 @@
 }
 
 JH_tag_m(UITableView)
+JH_bind_m(UITableView)
 JH_frame_m(UITableView)
 JH_alpha_m(UITableView)
 JH_bgColor_m(UITableView)

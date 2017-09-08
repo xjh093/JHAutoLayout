@@ -15,8 +15,8 @@
 //  define
 //=============================================================================//
 
-#define JH_SCALE_W(w) w/375.0*[UIScreen mainScreen].bounds.size.width
-#define JH_SCALE_H(h) h/667.0*[UIScreen mainScreen].bounds.size.height
+#define JH_SCALE_W(w) (w)/375.0*[UIScreen mainScreen].bounds.size.width
+#define JH_SCALE_H(h) (h)/667.0*[UIScreen mainScreen].bounds.size.height
 
 #define JHWeakSelf(type)    __weak typeof(type) weak##type = type
 #define JHStrongSelf(type)  __strong typeof(type) type = weak##type

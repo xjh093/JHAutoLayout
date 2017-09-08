@@ -14,6 +14,7 @@
 
 JH_new_m(UIScrollView)
 JH_tag_m(UIScrollView)
+JH_bind_m(UIScrollView)
 JH_frame_m(UIScrollView)
 JH_alpha_m(UIScrollView)
 JH_bgColor_m(UIScrollView)

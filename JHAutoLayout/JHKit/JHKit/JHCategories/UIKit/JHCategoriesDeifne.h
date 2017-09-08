@@ -38,6 +38,8 @@
 #define JH_tag_h(jhclass)         - (jhclass *(^)(id))jh_tag;
 #define JH_text_h(jhclass)        - (jhclass *(^)(id))jh_text;
 
+#define JH_bind_h(jhclass)        - (jhclass *(^)(jhclass**))jh_bind;
+
 #define JH_new_h(jhclass)         + (jhclass *(^)(  ))jh_new;
 
 //.m
@@ -218,6 +220,15 @@
         if ([text isKindOfClass:[NSString class]]) { \
             self.text = text; \
         } \
+        return self; \
+    }; \
+}
+
+#define JH_bind_m(jhclass) \
+- (jhclass *(^)(jhclass**))jh_bind{ \
+    JHLog(); \
+    return ^id(jhclass **bind){ \
+        *bind = self; \
         return self; \
     }; \
 }

@@ -15,6 +15,7 @@
 
 JH_new_m(UILabel)
 JH_tag_m(UILabel)
+JH_bind_m(UILabel)
 JH_text_m(UILabel)
 JH_font_m(UILabel)
 JH_align_m(UILabel)
@@ -141,5 +142,12 @@ JH_addToView_m(UILabel)
         [attStr addAttribute:NSFontAttributeName value:value range:range];
         self.attributedText = attStr;
     }
+}
+- (void)jhAddLineSpace:(CGFloat)space{
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:space < 0 ? 0 : space];
+    [attStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [self.text length])];
+    self.attributedText = attStr;
 }
 @end

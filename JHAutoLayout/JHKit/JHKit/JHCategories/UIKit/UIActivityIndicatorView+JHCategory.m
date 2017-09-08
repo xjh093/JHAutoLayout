@@ -242,7 +242,7 @@
     
     //单行
     CGSize size1 = CGSizeMake(MAXFLOAT, 20);
-    CGFloat width1 = [text boundingRectWithSize:size1 options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size.width;
+    CGFloat width1 = [text boundingRectWithSize:size1 options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size.width;
     
     if (width1 <= width)
     {
@@ -251,7 +251,7 @@
     
     //多行
     CGSize size2 = CGSizeMake(width, MAXFLOAT);
-    CGFloat height1 = [text boundingRectWithSize:size2 options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size.height;
+    CGFloat height1 = [text boundingRectWithSize:size2 options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size.height;
     return CGSizeMake(width, height1);
 }
 + (void)jhAiview:(UIActivityIndicatorView *)xAIView jhAnimationView:(JHBaseView *)baseView

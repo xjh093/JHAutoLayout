@@ -15,6 +15,7 @@
 
 JH_new_m(UITextField)
 JH_tag_m(UITextField)
+JH_bind_m(UITextField)
 JH_text_m(UITextField)
 JH_font_m(UITextField)
 JH_align_m(UITextField)

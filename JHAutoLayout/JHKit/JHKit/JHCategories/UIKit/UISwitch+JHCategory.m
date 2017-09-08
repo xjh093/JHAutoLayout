@@ -15,6 +15,7 @@
 
 JH_new_m(UISwitch)
 JH_tag_m(UISwitch)
+JH_bind_m(UISwitch)
 JH_frame_m(UISwitch)
 JH_alpha_m(UISwitch)
 JH_bgColor_m(UISwitch)

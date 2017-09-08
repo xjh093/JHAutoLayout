@@ -16,4 +16,7 @@
 
 @interface NSString (JHCaculationOfStringFormula)
 + (NSString *)jh_caculateStringFormula:(NSString *)formulaString;
+
+///用*替代中间的字符串
++ (NSString *)jh_hideMiddleString:(NSString *)string;
 @end
