@@ -7,9 +7,6 @@
 //
 
 #import "UIView+JHAutoLayoutCategory.h"
-#import "JHCategoriesDeifne.h"
-#import "UIFont+JHCategory.h"
-#import "UIColor+JHCategory.h"
 #import "UIView+JHRectCategory.h"
 #import <objc/runtime.h>
 
@@ -30,8 +27,6 @@
 #pragma mark 自动布局
 - (void)jhAutoLayout
 {
-    //开启了自动布局的标志
-    objc_setAssociatedObject(self, "jhAutoLayoutFlag", @"YES", OBJC_ASSOCIATION_COPY_NONATOMIC);
     
     //屏幕旋转通知
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -104,7 +99,7 @@
 {
     /**< 控制器的view第一次加载的时候，就不用更新了*/
     BOOL jh_first_flag = [objc_getAssociatedObject(self, "jhFirstFlag") boolValue];
-    /**< 屏蔽是否有旋转过*/
+    /**< 屏幕是否有旋转过*/
     NSString *jh_rotate = objc_getAssociatedObject(self, "jhScreenRotateFlag");
     /**< 第一次加载，无旋转*/
     if (!jh_first_flag && !jh_rotate) {
@@ -112,7 +107,6 @@
     }else{
         
         /**< 屏幕有旋转过，才进行更新*/
-        //NSString *jh_rotate = objc_getAssociatedObject(self, "jhScreenRotateFlag");
         if ([jh_rotate isEqualToString:@"YES"]) {
             objc_setAssociatedObject(self, "jhScreenRotateFlag", @"NO", OBJC_ASSOCIATION_COPY_NONATOMIC);
             [UIView animateWithDuration:0.25 animations:^{
@@ -134,7 +128,7 @@
                                                   object:nil];
 }
 
-#pragma mark 通过字符串转成frame
+#pragma mark 通过字符串转成frame & string -> frame
 - (CGRect)jhRectFromString:(NSString *)frameStr
 {
     NSString *saveFrameStr = frameStr;
@@ -145,6 +139,26 @@
         NSArray *xFourElementArr = [frameStr componentsSeparatedByString:@","];
         if (xFourElementArr.count != 4) return CGRectZero;
         
+        NSString *frameValue;
+        const char *Landscape_Portrait;
+        
+        //横屏 & Landscape
+        if ([[UIApplication sharedApplication] statusBarOrientation] == 3 ||
+            [[UIApplication sharedApplication] statusBarOrientation] == 4) {
+            //Landscape
+            Landscape_Portrait = "jhFrameString_Landscape";
+        }else{
+            //Portrait
+            Landscape_Portrait = "jhFrameString_Portrait";
+        }
+        
+        //是否有绑定过 计算好的 frame
+        frameValue = objc_getAssociatedObject(self, Landscape_Portrait);
+        //NSLog(@"%s,frameVaue:%@",Landscape_Portrait,frameValue);
+        if (frameValue) {
+            return CGRectFromString(frameValue);
+        }
+        
         NSString *frameString = objc_getAssociatedObject(self, "jhFrameString");
         if (frameString.length == 0) {
             //首次关联对象
@@ -152,6 +166,9 @@
         }else if (frameString.length > 0 && ![saveFrameStr isEqualToString:frameString]){
             //更换关联对象
             objc_setAssociatedObject(self, "jhFrameString", saveFrameStr, OBJC_ASSOCIATION_COPY_NONATOMIC);
+            
+            //remove
+            objc_setAssociatedObject(self, Landscape_Portrait, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
             
             //发个通知，重新布局
             [[NSNotificationCenter defaultCenter] postNotificationName:@"jhViewFrameChange" object:nil];
@@ -166,6 +183,9 @@
         self.jh_x = X;
         CGFloat Y = [self jhFloatFromString:xFourElementArr[1]];
         self.jh_y = Y;
+        
+        //
+        objc_setAssociatedObject(self, Landscape_Portrait, NSStringFromCGRect(self.frame), OBJC_ASSOCIATION_COPY_NONATOMIC);
         
         return CGRectMake(X, Y, W, H);
     }
@@ -273,29 +293,6 @@
     return [subStr stringByReplacingOccurrencesOfString:[subStr substringWithRange:range] withString:replaceString];
 }
 
-- (CGFloat)jhWorH:(CGFloat)wh str:(NSString *)str1
-{
-    if (str1.length == 1) {
-        return wh;
-    }
-    else if (str1.length > 2){
-        NSString *operation = [str1 substringWithRange:NSMakeRange(1, 1)];
-        NSString *value = [str1 substringFromIndex:2];
-        if ([self isPureInt:value] || [self isPureFloat:value]) {
-            if ([operation isEqualToString:@"+"]) {
-                return wh + [value floatValue];
-            }else if ([operation isEqualToString:@"-"]) {
-                return wh - [value floatValue];
-            }else if ([operation isEqualToString:@"*"]) {
-                return wh * [value floatValue];
-            }else if ([operation isEqualToString:@"/"]) {
-                return wh / [value floatValue];
-            }
-        }
-    }
-    return 0.0;
-}
-
 #pragma mark 是否为整形
 - (BOOL)isPureInt:(NSString*)string
 {
@@ -314,7 +311,7 @@
 
 - (CGFloat)jhParseFirstSubStr:(NSString *)firstStr
 {
-    NSArray *subArr = [firstStr componentsSeparatedByString:@"("]; // 2_x 100
+    NSArray *subArr = [firstStr componentsSeparatedByString:@"("];
     if (subArr.count != 2) return 0.0;
     
     NSString *first  = subArr[0];
