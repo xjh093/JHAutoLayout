@@ -89,7 +89,6 @@ value2是prefix(value) <br>
 2_w(110)*10，就是：view.frame.size.width/2 * 10 <br>
 2_w(110)/10，就是：view.frame.size.width/2 / 10 <br>
 
-结束！
 
 开启自动布局：
 ```objc
@@ -116,4 +115,10 @@ VC1竖屏旋转成横屏后进入VC2，VC2横屏旋转成竖屏后再返回，�
 
 ![image](https://github.com/xjh093/JHAutoLayout/blob/master/2.gif)
 
-
+结束布局:
+因为注册了通知，所以控制器移除的时候，要移除通知
+```objc
+- (void)dealloc{
+    [self.view jhEndLayout];
+}
+```
