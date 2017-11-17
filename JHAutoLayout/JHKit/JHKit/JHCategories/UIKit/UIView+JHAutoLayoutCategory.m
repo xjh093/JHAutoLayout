@@ -9,6 +9,13 @@
 #import "UIView+JHAutoLayoutCategory.h"
 #import "UIView+JHRectCategory.h"
 #import <objc/runtime.h>
+#if __has_include(<JavaScriptCore/JavaScriptCore.h>)
+#import <JavaScriptCore/JavaScriptCore.h>
+#define JH_HAS_JSCore 1
+#else
+#define JH_HAS_JSCore 0
+#endif
+
 
 @implementation UIView (JHAutoLayoutCategory)
 
@@ -276,7 +283,15 @@
             [subStr containsString:@"-"] ||
             [subStr containsString:@"*"] ||
             [subStr containsString:@"/"] ) {
-            return [[NSString jh_caculateStringFormula:subStr] floatValue];
+            if (JH_HAS_JSCore) {
+                NSLog(@"JH_HAS_JSCore YES");
+                JSContext *context = [[JSContext alloc] init];
+                JSValue *value = [context evaluateScript:subStr];
+                return (CGFloat)[value toDouble];
+            }else{
+                NSLog(@"JH_HAS_JSCore NO");
+               return [[NSString jh_caculateStringFormula:subStr] floatValue];
+            }
         }
         else if ([self isPureInt:subStr] || [self isPureFloat:subStr]) {
             return [subStr floatValue];
