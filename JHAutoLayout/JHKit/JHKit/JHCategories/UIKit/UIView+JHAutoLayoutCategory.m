@@ -151,6 +151,12 @@
         NSArray *xFourElementArr = [frameStr componentsSeparatedByString:@","];
         if (xFourElementArr.count != 4) return CGRectZero;
         
+// 将计算好的 frame 绑定到 view 上，以免重复计算
+// 优点：不用重复计算 frame
+// 缺点：相关联的 view 的 frame 变动时，造成 frame 不能更新了
+// 所以 不采用 绑定
+#define kJHUSE_ASSOCIATED 0
+#if kJHUSE_ASSOCIATED
         NSString *frameValue;
         const char *Landscape_Portrait;
         
@@ -170,6 +176,7 @@
         if (frameValue) {
             return CGRectFromString(frameValue);
         }
+#endif
         
         NSString *frameString = objc_getAssociatedObject(self, "jhFrameString");
         if (frameString.length == 0) {
@@ -179,8 +186,10 @@
             //更换关联对象
             objc_setAssociatedObject(self, "jhFrameString", saveFrameStr, OBJC_ASSOCIATION_COPY_NONATOMIC);
             
+#if kJHUSE_ASSOCIATED
             //remove
             objc_setAssociatedObject(self, Landscape_Portrait, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
+#endif
             
             //发个通知，重新布局
             [[NSNotificationCenter defaultCenter] postNotificationName:@"jhViewFrameChange" object:nil];
@@ -196,8 +205,10 @@
         CGFloat Y = [self jhFloatFromString:xFourElementArr[1]];
         self.jh_y = Y;
         
+#if kJHUSE_ASSOCIATED
         //
         objc_setAssociatedObject(self, Landscape_Portrait, NSStringFromCGRect(self.frame), OBJC_ASSOCIATION_COPY_NONATOMIC);
+#endif
         
         return CGRectMake(X, Y, W, H);
     }
