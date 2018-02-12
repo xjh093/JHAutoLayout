@@ -61,14 +61,14 @@ H,同理。
 prefix可以是：x,y,w,h,midx,midy,maxx,maxy。<br>
 value是：view的父类view的tag值，或者是父类view里面子view的tag值。<br>
 比如：<br>
-x(110) 表示取父类view中tag值为100的view的x值，即x(100) == view.frame.origin.x <br>
-y(110) 表示取父类view中tag值为100的view的y值，即y(100) == view.frame.origin.y <br>
-w(110) 表示取父类view中tag值为100的view的width值，即w(100) == view.frame.size.width <br>
-h(110) 表示取父类view中tag值为100的view的height值，即h(100) == view.frame.size.height <br>
-midx(110) 表示取父类view中tag值为100的view的x+width*0.5值，即midx(100) == CGRectGetMidX(view.frame) <br>
-midy(110) 表示取父类view中tag值为100的view的y+height*0.5值，即midy(100) == CGRectGetMidY(view.frame) <br>
-maxx(110) 表示取父类view中tag值为100的view的x+width值，即maxx(100) == CGRectGetMaxX(view.frame) <br>
-maxy(110) 表示取父类view中tag值为100的view的y+height值，即maxy(100) == CGRectGetMaxY(view.frame) <br>
+x(110) 表示取当前窗口中tag值为100的view的x值，即x(100) == view.frame.origin.x <br>
+y(110) 表示取当前窗口中tag值为100的view的y值，即y(100) == view.frame.origin.y <br>
+w(110) 表示取当前窗口中tag值为100的view的width值，即w(100) == view.frame.size.width <br>
+h(110) 表示取当前窗口中tag值为100的view的height值，即h(100) == view.frame.size.height <br>
+midx(110) 表示取当前窗口中tag值为100的view的x+width*0.5值，即midx(100) == CGRectGetMidX(view.frame) <br>
+midy(110) 表示取当前窗口中tag值为100的view的y+height*0.5值，即midy(100) == CGRectGetMidY(view.frame) <br>
+maxx(110) 表示取当前窗口中tag值为100的view的x+width值，即maxx(100) == CGRectGetMaxX(view.frame) <br>
+maxy(110) 表示取当前窗口中tag值为100的view的y+height值，即maxy(100) == CGRectGetMaxY(view.frame) <br>
 
 #### 2.4 结合2.2与2.3
 #### 把2.2中的 W+(-*/)value的W换成 prefix(value) <br>
